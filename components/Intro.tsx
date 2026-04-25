@@ -24,9 +24,16 @@ function formatLongDate(date: string): string {
 
 function friendlyAuthError(raw: string): string {
   const lower = raw.toLowerCase();
-  if (lower.includes('expired') || lower.includes('invalid')) return 'LINK EXPIRED — TRY AGAIN';
-  if (lower.includes('missing_code')) return 'AUTH FAILED — TRY AGAIN';
-  return raw.toUpperCase();
+  if (
+    lower.includes('expired') ||
+    lower.includes('invalid') ||
+    lower.includes('otp') ||
+    lower.includes('verifier') ||
+    lower.includes('pkce')
+  ) {
+    return 'LINK EXPIRED — TRY AGAIN';
+  }
+  return 'AUTH FAILED — TRY AGAIN';
 }
 
 export default function Intro() {
@@ -53,6 +60,7 @@ export default function Intro() {
       // ignore
     }
     if (!err) return;
+    console.warn('[auth] callback error:', err);
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot URL parse on mount
     setAuthError(friendlyAuthError(err));
   }, []);
