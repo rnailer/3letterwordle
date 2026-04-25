@@ -320,6 +320,9 @@ body.kit {
 
 /* Buttons */
 .kit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--ff-display);
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -330,6 +333,7 @@ body.kit {
   box-shadow: 3px 3px 0 var(--c-ink);
   background: var(--c-sky);
   color: var(--c-ink);
+  text-decoration: none;
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-pop),
               box-shadow var(--dur-fast) var(--ease-pop),
