@@ -1,13 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog';
+import Modal from '@/components/Modal';
 
 type Stats = {
   played: number;
@@ -19,63 +13,63 @@ type Stats = {
 
 export type StatsModalProps = {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onClose: () => void;
   refreshKey?: number;
   children?: React.ReactNode;
 };
 
-export default function StatsModal({ open, onOpenChange, refreshKey, children }: StatsModalProps) {
+export default function StatsModal({ open, onClose, refreshKey, children }: StatsModalProps) {
   const [stats, setStats] = useState<Stats | null>(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!open) return;
     let cancelled = false;
-    setLoading(true);
     fetch('/api/stats', { cache: 'no-store' })
       .then((r) => r.json())
       .then((data) => {
         if (!cancelled) setStats(data);
       })
-      .catch(() => {})
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
+      .catch(() => {});
     return () => {
       cancelled = true;
     };
   }, [open, refreshKey]);
 
+  const loading = open && stats === null;
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Statistics</DialogTitle>
-          <DialogDescription>Your play history on this device.</DialogDescription>
-        </DialogHeader>
+    <Modal open={open} onClose={onClose} title="Your Stats">
+      {loading && (
+        <p style={{ fontFamily: 'var(--ff-mono)', fontSize: 13, margin: '8px 0' }}>Loading…</p>
+      )}
 
-        {loading && <p className="text-sm text-muted-foreground">Loading…</p>}
+      {!loading && stats && stats.played === 0 && (
+        <div className="empty-stats">
+          <div className="glyph">0/0</div>
+          <h3>No games yet.</h3>
+          <p>Solve today&rsquo;s word and your streak starts.</p>
+        </div>
+      )}
 
-        {!loading && stats && (
-          <div className="grid grid-cols-4 gap-4 py-2 text-center">
-            <Stat label="Played" value={stats.played} />
-            <Stat label="Win %" value={Math.round(stats.winRate * 100)} />
-            <Stat label="Streak" value={stats.currentStreak} />
-            <Stat label="Max" value={stats.maxStreak} />
-          </div>
-        )}
+      {!loading && stats && stats.played > 0 && (
+        <div className="stat-grid">
+          <Stat label="Played" value={stats.played} />
+          <Stat label="Win %" value={Math.round(stats.winRate * 100)} />
+          <Stat label="Streak" value={stats.currentStreak} />
+          <Stat label="Best" value={stats.maxStreak} />
+        </div>
+      )}
 
-        {children}
-      </DialogContent>
-    </Dialog>
+      {children}
+    </Modal>
   );
 }
 
 function Stat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="flex flex-col items-center">
-      <div className="text-3xl font-bold tabular-nums">{value}</div>
-      <div className="text-xs uppercase text-muted-foreground">{label}</div>
+    <div className="stat">
+      <div className="n">{value}</div>
+      <div className="l">{label}</div>
     </div>
   );
 }

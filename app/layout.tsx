@@ -143,10 +143,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${fontVariables} h-full antialiased`}>
-      <body
-        className="min-h-full flex flex-col bg-background text-foreground"
-        suppressHydrationWarning
-      >
+      <body className="kit min-h-full flex flex-col" suppressHydrationWarning>
         {children}
       </body>
     </html>

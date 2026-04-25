@@ -9,12 +9,7 @@ export type BoardProps = {
   guesses: BoardRow[];
   current: string;
   shakingRow: number | null;
-};
-
-const STATE_CLASS: Record<LetterState, string> = {
-  correct: 'bg-green-600 border-green-600 text-white',
-  present: 'bg-yellow-500 border-yellow-500 text-white',
-  absent: 'bg-neutral-500 border-neutral-500 text-white dark:bg-neutral-700 dark:border-neutral-700',
+  winningRow: number | null;
 };
 
 function Tile({
@@ -26,18 +21,14 @@ function Tile({
   state: LetterState | null;
   filled: boolean;
 }) {
-  const base =
-    'w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center text-3xl sm:text-4xl font-bold uppercase select-none rounded-md border-2 transition-colors';
-  if (state) {
-    return <div className={`${base} ${STATE_CLASS[state]}`}>{letter}</div>;
-  }
-  const empty = filled
-    ? 'border-neutral-500 dark:border-neutral-400 text-foreground'
-    : 'border-neutral-300 dark:border-neutral-700 text-foreground';
-  return <div className={`${base} ${empty}`}>{letter}</div>;
+  const cls = ['tile'];
+  if (state) cls.push(state);
+  else if (filled) cls.push('filled');
+  else if (!letter) cls.push('empty');
+  return <div className={cls.join(' ')}>{letter || ''}</div>;
 }
 
-export default function Board({ guesses, current, shakingRow }: BoardProps) {
+export default function Board({ guesses, current, shakingRow, winningRow }: BoardProps) {
   const rows: BoardRow[] = [];
   for (let i = 0; i < MAX_GUESSES; i++) {
     if (i < guesses.length) {
@@ -50,14 +41,13 @@ export default function Board({ guesses, current, shakingRow }: BoardProps) {
   }
 
   return (
-    <div
-      className="flex flex-col gap-2 select-none"
-      style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none' }}
-    >
+    <div className="board">
       {rows.map((row, i) => {
-        const shaking = shakingRow === i ? 'animate-[wiggle_0.4s_ease-in-out]' : '';
+        const cls = ['board-row'];
+        if (shakingRow === i) cls.push('shake');
+        if (winningRow === i) cls.push('win');
         return (
-          <div key={i} className={`flex gap-2 justify-center ${shaking}`}>
+          <div key={i} className={cls.join(' ')}>
             {Array.from({ length: WORD_LENGTH }).map((_, j) => {
               const letter = row.letters[j]?.trim() ?? '';
               return (

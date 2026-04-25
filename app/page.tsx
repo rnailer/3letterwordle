@@ -5,7 +5,8 @@ import Board, { type BoardRow } from '@/components/Board';
 import Keyboard from '@/components/Keyboard';
 import ShareButton from '@/components/ShareButton';
 import StatsModal from '@/components/StatsModal';
-import { Button } from '@/components/ui/button';
+import HowToModal from '@/components/HowToModal';
+import { Header, Outcome, PuzzleChips } from '@/components/Chrome';
 import { MAX_GUESSES, WORD_LENGTH, type LetterState } from '@/lib/game';
 
 type GuessRecord = {
@@ -35,7 +36,6 @@ function storageKey(date: string) {
   return `${STORAGE_PREFIX}${date}`;
 }
 
-// Remove any saved-game entries from prior days so localStorage doesn't grow forever.
 function pruneStaleSaves(today: string) {
   const keepKey = storageKey(today);
   const toRemove: string[] = [];
@@ -48,32 +48,22 @@ function pruneStaleSaves(today: string) {
   for (const k of toRemove) localStorage.removeItem(k);
 }
 
-function NextPuzzleCountdown() {
+function useCountdown(): string | null {
   const [left, setLeft] = useState<string | null>(null);
-
   useEffect(() => {
     const tick = () => {
       const now = new Date();
-      const midnight = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate() + 1,
-        0, 0, 0, 0,
-      );
+      const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0);
       const ms = midnight.getTime() - now.getTime();
       const h = Math.floor(ms / 3_600_000);
       const m = Math.floor((ms % 3_600_000) / 60_000);
-      setLeft(`${h}h ${m}m`);
+      setLeft(`${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m`);
     };
     tick();
     const id = setInterval(tick, 30_000);
     return () => clearInterval(id);
   }, []);
-
-  if (!left) return null;
-  return (
-    <p className="text-sm text-muted-foreground tabular-nums">Next puzzle in {left}</p>
-  );
+  return left;
 }
 
 export default function Home() {
@@ -85,29 +75,35 @@ export default function Home() {
   const [answer, setAnswer] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [shakingRow, setShakingRow] = useState<number | null>(null);
+  const [winningRow, setWinningRow] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [statsOpen, setStatsOpen] = useState(false);
+  const [howOpen, setHowOpen] = useState(false);
   const [statsRefreshKey, setStatsRefreshKey] = useState(0);
   const [pressedKey, setPressedKey] = useState<string | null>(null);
 
-  // Hydrate from localStorage and prune stale entries
+  const countdown = useCountdown();
+
   useEffect(() => {
+    let saved: Saved | null = null;
     try {
       pruneStaleSaves(date);
       const raw = localStorage.getItem(storageKey(date));
-      if (!raw) return;
-      const saved: Saved = JSON.parse(raw);
-      if (saved.date !== date) return;
-      setGuesses(saved.guesses);
-      setFinished(saved.finished);
-      setSolved(saved.solved);
-      setAnswer(saved.answer);
+      if (raw) {
+        const parsed: Saved = JSON.parse(raw);
+        if (parsed.date === date) saved = parsed;
+      }
     } catch {
       // ignore
     }
+    if (!saved) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot localStorage hydration on mount
+    setGuesses(saved.guesses);
+    setFinished(saved.finished);
+    setSolved(saved.solved);
+    setAnswer(saved.answer);
   }, [date]);
 
-  // Persist to localStorage
   useEffect(() => {
     if (guesses.length === 0 && !finished) return;
     const payload: Saved = { date, guesses, finished, solved, answer };
@@ -136,11 +132,10 @@ export default function Home() {
   const shake = useCallback((rowIndex: number, msg: string) => {
     setShakingRow(rowIndex);
     setError(msg);
-    setTimeout(() => setShakingRow(null), 400);
+    setTimeout(() => setShakingRow(null), 420);
     setTimeout(() => setError((e) => (e === msg ? null : e)), 1800);
   }, []);
 
-  // Records the finished game, then opens the stats modal with a refresh cue.
   const recordAndShowStats = useCallback(
     async (finalGuessCount: number, didSolve: boolean) => {
       try {
@@ -150,7 +145,7 @@ export default function Home() {
           body: JSON.stringify({ date, guesses: finalGuessCount, solved: didSolve }),
         });
       } catch {
-        // ignore — stats are best-effort
+        // best-effort
       }
       setStatsRefreshKey((k) => k + 1);
       setStatsOpen(true);
@@ -161,7 +156,7 @@ export default function Home() {
   const submit = useCallback(async () => {
     if (finished || submitting) return;
     if (current.length !== WORD_LENGTH) {
-      shake(guesses.length, 'Not enough letters');
+      shake(guesses.length, 'NOT ENOUGH LETTERS');
       return;
     }
     setSubmitting(true);
@@ -173,26 +168,28 @@ export default function Home() {
       });
       const data = await res.json();
       if (!res.ok) {
-        shake(guesses.length, data?.error ?? 'Invalid guess');
+        const msg = data?.error === 'Not in word list' ? 'NOT A WORD' : (data?.error ?? 'INVALID GUESS').toUpperCase();
+        shake(guesses.length, msg);
         return;
       }
       const nextGuesses = [...guesses, { letters: current, states: data.result as LetterState[] }];
       setGuesses(nextGuesses);
       setCurrent('');
       if (data.solved) {
-        setFinished(true);
         setSolved(true);
         setAnswer(data.answer ?? current);
+        setWinningRow(nextGuesses.length - 1);
         await new Promise((r) => setTimeout(r, 900));
+        setFinished(true);
         recordAndShowStats(nextGuesses.length, true);
       } else if (nextGuesses.length >= MAX_GUESSES) {
+        await new Promise((r) => setTimeout(r, 500));
         setFinished(true);
         setSolved(false);
-        await new Promise((r) => setTimeout(r, 900));
         recordAndShowStats(nextGuesses.length, false);
       }
     } catch {
-      shake(guesses.length, 'Network error');
+      shake(guesses.length, 'NETWORK ERROR');
     } finally {
       setSubmitting(false);
     }
@@ -217,12 +214,14 @@ export default function Home() {
   );
 
   const onKeyRef = useRef(onKey);
-  onKeyRef.current = onKey;
+  useEffect(() => {
+    onKeyRef.current = onKey;
+  }, [onKey]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
-      if (statsOpen || finished) return;
+      if (statsOpen || howOpen || finished) return;
 
       const target = e.target as HTMLElement | null;
       if (target) {
@@ -251,48 +250,44 @@ export default function Home() {
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [statsOpen, finished]);
+  }, [statsOpen, howOpen, finished]);
 
   const boardRows: BoardRow[] = guesses.map((g) => ({ letters: g.letters, states: g.states }));
 
   return (
     <>
-      <header className="w-full border-b border-neutral-200 dark:border-neutral-800">
-        <div className="mx-auto max-w-2xl px-4 py-3 flex items-center justify-between">
-          <h1 className="text-xl font-bold tracking-tight">3 Letter Wordle</h1>
-          <Button variant="outline" size="sm" onClick={() => setStatsOpen(true)}>
-            Stats
-          </Button>
-        </div>
-      </header>
+      <div className="kit-page">
+        <Header onHow={() => setHowOpen(true)} onStats={() => setStatsOpen(true)} />
 
-      <main className="flex-1 flex flex-col items-center justify-between gap-6 px-4 py-6 max-w-2xl w-full mx-auto">
-        <div className="flex flex-col items-center gap-4 w-full">
-          <div className="h-6 text-sm text-red-500 dark:text-red-400" role="status" aria-live="polite">
-            {error}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, width: '100%' }}>
+          <PuzzleChips date={date} />
+          <div className="err" aria-live="polite" role="status">
+            {error && <span className="err-pill">{error}</span>}
           </div>
-          <div className={finished ? 'opacity-80' : undefined}>
-            <Board guesses={boardRows} current={current} shakingRow={shakingRow} />
-          </div>
-          {finished && (
-            <div className="flex flex-col items-center gap-2 mt-2">
-              {solved ? (
-                <p className="text-lg font-semibold">
-                  Solved in {guesses.length}!{' '}
-                  {answer && <span className="uppercase">{answer}</span>}
-                </p>
-              ) : (
-                <p className="text-lg font-semibold">Better luck tomorrow.</p>
-              )}
-              <NextPuzzleCountdown />
-              <ShareButton
-                date={date}
-                results={guesses.map((g) => g.states)}
-                solved={solved}
-              />
-            </div>
-          )}
+          <Board
+            guesses={boardRows}
+            current={current}
+            shakingRow={shakingRow}
+            winningRow={winningRow}
+          />
         </div>
+
+        {finished && (
+          <Outcome
+            solved={solved}
+            guesses={guesses.length}
+            answer={answer}
+            countdown={countdown}
+          />
+        )}
+
+        {finished && (
+          <ShareButton
+            date={date}
+            results={guesses.map((g) => g.states)}
+            solved={solved}
+          />
+        )}
 
         <Keyboard
           letterStates={letterStates}
@@ -300,24 +295,14 @@ export default function Home() {
           disabled={finished || submitting}
           pressedKey={pressedKey}
         />
-      </main>
+      </div>
 
       <StatsModal
         open={statsOpen}
-        onOpenChange={setStatsOpen}
+        onClose={() => setStatsOpen(false)}
         refreshKey={statsRefreshKey}
-      >
-        {finished && (
-          <div className="flex flex-col items-center gap-3 pt-2">
-            <NextPuzzleCountdown />
-            <ShareButton
-              date={date}
-              results={guesses.map((g) => g.states)}
-              solved={solved}
-            />
-          </div>
-        )}
-      </StatsModal>
+      />
+      <HowToModal open={howOpen} onClose={() => setHowOpen(false)} />
     </>
   );
 }

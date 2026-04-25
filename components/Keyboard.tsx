@@ -8,12 +8,6 @@ const ROWS = [
   ['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Backspace'],
 ];
 
-const STATE_CLASS: Record<LetterState, string> = {
-  correct: 'bg-green-600 text-white hover:bg-green-600',
-  present: 'bg-yellow-500 text-white hover:bg-yellow-500',
-  absent: 'bg-neutral-500 text-white hover:bg-neutral-500 dark:bg-neutral-700',
-};
-
 export type KeyboardProps = {
   letterStates: Record<string, LetterState>;
   onKey: (key: string) => void;
@@ -23,27 +17,24 @@ export type KeyboardProps = {
 
 export default function Keyboard({ letterStates, onKey, disabled, pressedKey }: KeyboardProps) {
   return (
-    <div
-      className="flex flex-col gap-1.5 w-full max-w-lg select-none"
-      style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none' }}
-    >
+    <div className="kb">
       {ROWS.map((row, i) => (
-        <div key={i} className="flex gap-1.5 justify-center">
+        <div key={i} className="kb-row">
           {row.map((key) => {
-            const isSpecial = key === 'Enter' || key === 'Backspace';
+            const wide = key === 'Enter' || key === 'Backspace';
             const state = letterStates[key];
-            const stateClass = state ? STATE_CLASS[state] : 'bg-neutral-200 dark:bg-neutral-600 text-foreground hover:bg-neutral-300';
+            const cls = ['key'];
+            if (wide) cls.push('wide');
+            if (state) cls.push(state);
+            if (pressedKey === key) cls.push('pressed');
             const label = key === 'Backspace' ? '⌫' : key === 'Enter' ? 'Enter' : key.toUpperCase();
-            const pressed = pressedKey === key;
             return (
               <button
                 key={key}
                 type="button"
+                className={cls.join(' ')}
                 onClick={() => !disabled && onKey(key)}
                 disabled={disabled}
-                className={`h-14 rounded font-semibold uppercase text-sm transition-all disabled:opacity-60 ${
-                  isSpecial ? 'px-3 text-xs' : 'flex-1 min-w-[2rem]'
-                } ${stateClass} ${pressed ? 'ring-2 ring-foreground/40 scale-95' : ''}`}
               >
                 {label}
               </button>
