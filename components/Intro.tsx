@@ -22,12 +22,40 @@ function formatLongDate(date: string): string {
   return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
+function friendlyAuthError(raw: string): string {
+  const lower = raw.toLowerCase();
+  if (lower.includes('expired') || lower.includes('invalid')) return 'LINK EXPIRED — TRY AGAIN';
+  if (lower.includes('missing_code')) return 'AUTH FAILED — TRY AGAIN';
+  return raw.toUpperCase();
+}
+
 export default function Intro() {
   const [howOpen, setHowOpen] = useState(false);
   const [statsOpen, setStatsOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [hasPlayedToday, setHasPlayedToday] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
   const { user } = useUser();
+
+  useEffect(() => {
+    let err: string | null = null;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      err = params.get('auth_error');
+      const hashHasError = window.location.hash.includes('error=');
+      if (err || hashHasError) {
+        params.delete('auth_error');
+        const search = params.toString();
+        const cleaned = `${window.location.pathname}${search ? '?' + search : ''}`;
+        window.history.replaceState({}, '', cleaned);
+      }
+    } catch {
+      // ignore
+    }
+    if (!err) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot URL parse on mount
+    setAuthError(friendlyAuthError(err));
+  }, []);
 
   useEffect(() => {
     let played = false;
@@ -94,6 +122,27 @@ export default function Intro() {
             <br />
             big stakes.
           </p>
+
+          {authError && (
+            <div
+              className="err"
+              role="status"
+              aria-live="polite"
+              style={{ height: 'auto', flexDirection: 'column', gap: 8, marginTop: 4 }}
+            >
+              <span className="err-pill">{authError}</span>
+              <button
+                type="button"
+                className="kit-btn small"
+                onClick={() => {
+                  setAuthError(null);
+                  setAuthOpen(true);
+                }}
+              >
+                SEND A NEW LINK
+              </button>
+            </div>
+          )}
 
           <div className="intro-actions">
             {!user && (
