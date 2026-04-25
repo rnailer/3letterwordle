@@ -228,25 +228,29 @@ function Billboard() {
           strokeWidth="4"
         />
         <text
-          x="221"
-          y="80"
+          x="218"
+          y="76"
           textAnchor="middle"
-          fontFamily="var(--ff-round)"
-          fontSize="44"
+          fontFamily="var(--ff-display)"
+          fontSize="40"
           fontWeight="900"
-          fill="var(--c-yellow-ink)"
+          fill="var(--c-ink)"
           letterSpacing="2"
+          opacity="0.95"
+          transform="translate(3,4)"
         >
           THREE LTR
         </text>
         <text
           x="218"
-          y="77"
+          y="76"
           textAnchor="middle"
-          fontFamily="var(--ff-round)"
-          fontSize="44"
+          fontFamily="var(--ff-display)"
+          fontSize="40"
           fontWeight="900"
-          fill="var(--c-ink)"
+          fill="var(--c-sky)"
+          stroke="var(--c-ink)"
+          strokeWidth="2"
           letterSpacing="2"
         >
           THREE LTR
