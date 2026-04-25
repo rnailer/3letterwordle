@@ -182,8 +182,14 @@ export default function Intro() {
 // the prototype's Intro.jsx so the lockup matches screenshots 01–03.
 function Billboard() {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12, marginBottom: 4 }}>
-      <svg width="460" height="240" viewBox="0 0 460 240" fill="none" aria-hidden="true">
+    <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12, marginBottom: 4, width: '100%' }}>
+      <svg
+        viewBox="0 0 460 240"
+        preserveAspectRatio="xMidYMid meet"
+        fill="none"
+        aria-hidden="true"
+        style={{ width: '100%', height: 'auto', maxWidth: 460, display: 'block' }}
+      >
         <rect
           x="148"
           y="190"

@@ -261,6 +261,12 @@
    in. The body gets class="kit" once the visual refresh ships.
    ===================================================================== */
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body.kit {
   font-family: var(--ff-body);
   color: var(--fg-1);
@@ -651,6 +657,59 @@ body.kit {
 .how p { margin: 0 0 10px; font-size: 14px; line-height: 1.5; }
 .how .demo { display: flex; gap: 8px; margin: 10px 0 16px; justify-content: center; }
 .how .demo .tile { width: 48px; height: 48px; font-size: 28px; box-shadow: 3px 3px 0 var(--c-ink); }
+
+/* =====================================================================
+   Mobile breakpoint — small Android (Samsung A11 ≈ 360×720 CSS px)
+   ---------------------------------------------------------------------
+   Keyboard min-widths sum to ~334px; with kit-page padding nothing fits
+   the viewport. Modal H2 in FT West at 32px also overflows. Tighten
+   spacing, shrink keys/tiles/title, and let the dialog fill the screen.
+   ===================================================================== */
+
+@media (max-width: 480px) {
+  .kit-page { padding: 16px 10px 28px; gap: 18px; }
+
+  .kit-logo .lt { width: 30px; height: 30px; font-size: 18px; }
+  .kit-logo .name { font-size: 18px; }
+  .kit-btn { font-size: 14px; padding: 8px 14px; }
+  .kit-btn.small { font-size: 13px; padding: 5px 10px; }
+
+  .chip { font-size: 13px; padding: 5px 8px; letter-spacing: 0.03em; }
+  .err-pill { font-size: 14px; padding: 5px 10px; letter-spacing: 0.04em; }
+
+  .board { gap: 8px; }
+  .board-row { gap: 8px; }
+  .tile { width: 60px; height: 60px; font-size: 36px; box-shadow: 4px 4px 0 var(--c-ink); }
+
+  .kb { gap: 5px; max-width: 100%; }
+  .kb-row { gap: 4px; }
+  .key { min-width: 24px; height: 44px; font-size: 14px; box-shadow: 2px 2px 0 var(--c-ink); }
+  .key.wide { font-size: 10px; flex: 1.4; }
+
+  .intro { padding: 8px 16px 32px; gap: 14px; }
+  .intro-mark { gap: 8px; }
+  .intro-mark .lt { width: 56px; height: 56px; font-size: 36px; }
+  .intro-sub { font-size: 36px; }
+
+  .dialog { padding: 18px 16px 14px; max-width: 100%; }
+  .dialog h2 {
+    font-size: 24px;
+    text-shadow: 2px 2px 0 var(--c-sky);
+    word-break: break-word;
+    margin-bottom: 10px;
+  }
+  .dialog .actions { gap: 8px; }
+
+  .empty-stats .glyph { font-size: 56px; }
+  .empty-stats h3 { font-size: 18px; }
+  .outcome .script { font-size: 42px; }
+  .outcome .sub { font-size: 16px; }
+
+  .stat .n { font-size: 26px; }
+  .streak-banner { padding: 12px 14px; gap: 10px; }
+  .streak-banner .num { font-size: 44px; }
+  .streak-banner .copy .l1 { font-size: 22px; }
+}
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
