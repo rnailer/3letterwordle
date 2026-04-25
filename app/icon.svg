@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#FFD22F"></rect>
+  
+  <g transform="translate(131.072 256) rotate(-5)">
+    <rect x="-65.28" y="-87.04" width="130.56" height="174.08" rx="20.48" fill="#FFD22F" stroke="#0E1015" stroke-width="11.264"></rect>
+    <text x="0" y="0" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="138.24" fill="#0E1015" text-anchor="middle" dominant-baseline="central">3</text>
+  </g>
+  
+  <g transform="translate(256 263.68) rotate(0)">
+    <rect x="-65.28" y="-87.04" width="130.56" height="174.08" rx="20.48" fill="#8EC5E8" stroke="#0E1015" stroke-width="11.264"></rect>
+    <text x="0" y="0" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="138.24" fill="#0E1015" text-anchor="middle" dominant-baseline="central">L</text>
+  </g>
+  
+  <g transform="translate(380.928 256) rotate(5)">
+    <rect x="-65.28" y="-87.04" width="130.56" height="174.08" rx="20.48" fill="#2E7D3F" stroke="#0E1015" stroke-width="11.264"></rect>
+    <text x="0" y="0" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="138.24" fill="#FFD22F" text-anchor="middle" dominant-baseline="central">W</text>
+  </g>
+</svg>

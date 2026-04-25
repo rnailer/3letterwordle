@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono, Space_Grotesk, Space_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
@@ -114,9 +114,31 @@ const baileWestShadow = localFont({
   display: 'swap',
 });
 
+const SITE_NAME = '3 Letter Wordle';
+const SITE_DESCRIPTION = 'Small words, big stakes. A daily 3-letter word puzzle — three letters, six tries, one word a day.';
+
 export const metadata: Metadata = {
-  title: '3 Letter Wordle',
-  description: 'A daily 3-letter word puzzle.',
+  metadataBase: new URL('https://www.3letterwordle.com'),
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  openGraph: {
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    type: 'website',
+    url: 'https://www.3letterwordle.com',
+    siteName: SITE_NAME,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#FFD22F',
+  colorScheme: 'light',
 };
 
 const fontVariables = [
