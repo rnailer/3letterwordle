@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import AuthModal from '@/components/AuthModal';
 import HowToModal from '@/components/HowToModal';
 import StatsModal from '@/components/StatsModal';
+import { useUser } from '@/lib/auth-client';
 
 const STORAGE_PREFIX = 'w3:';
 
@@ -26,6 +27,7 @@ export default function Intro() {
   const [statsOpen, setStatsOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [hasPlayedToday, setHasPlayedToday] = useState(false);
+  const { user } = useUser();
 
   useEffect(() => {
     let played = false;
@@ -55,9 +57,27 @@ export default function Intro() {
             <button type="button" className="kit-btn small" onClick={() => setHowOpen(true)}>
               HOW
             </button>
-            <button type="button" className="kit-btn small" onClick={() => setStatsOpen(true)}>
-              STATS
-            </button>
+            {user ? (
+              <button
+                type="button"
+                className="kit-btn small"
+                onClick={() => setStatsOpen(true)}
+                aria-label={`Account: ${user.email ?? 'signed in'}`}
+                style={{
+                  width: 32,
+                  height: 32,
+                  padding: 0,
+                  background: 'var(--c-green)',
+                  color: 'var(--c-yellow)',
+                }}
+              >
+                {(user.email ?? '·').trim().charAt(0).toUpperCase() || '·'}
+              </button>
+            ) : (
+              <button type="button" className="kit-btn small" onClick={() => setStatsOpen(true)}>
+                STATS
+              </button>
+            )}
           </div>
         </header>
 
@@ -76,9 +96,11 @@ export default function Intro() {
           </p>
 
           <div className="intro-actions">
-            <button type="button" className="kit-btn" onClick={() => setAuthOpen(true)}>
-              LOG IN
-            </button>
+            {!user && (
+              <button type="button" className="kit-btn" onClick={() => setAuthOpen(true)}>
+                LOG IN
+              </button>
+            )}
             <Link href="/play" className="kit-btn primary" prefetch>
               {hasPlayedToday ? '▸ CONTINUE' : 'PLAY'}
             </Link>
@@ -93,7 +115,7 @@ export default function Intro() {
       </div>
 
       <HowToModal open={howOpen} onClose={() => setHowOpen(false)} />
-      <StatsModal open={statsOpen} onClose={() => setStatsOpen(false)} />
+      <StatsModal open={statsOpen} onClose={() => setStatsOpen(false)} user={user} />
       <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </>
   );

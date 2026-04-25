@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Modal from '@/components/Modal';
+import { createSbBrowser } from '@/lib/supabase-browser';
 
 export type AuthModalProps = {
   open: boolean;
@@ -20,12 +21,24 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
     if (!email.trim()) return;
     setStatus('sending');
     setErrorMsg(null);
-    // Wiring lands in commit (e). For now: mark idle so the form is
-    // visibly inert without claiming a magic link was sent.
-    setTimeout(() => {
+    try {
+      const supabase = createSbBrowser();
+      const { error } = await supabase.auth.signInWithOtp({
+        email: email.trim(),
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+      if (error) {
+        setStatus('error');
+        setErrorMsg(error.message);
+        return;
+      }
+      setStatus('sent');
+    } catch (err) {
       setStatus('error');
-      setErrorMsg('Auth not enabled yet — wiring lands in next push.');
-    }, 200);
+      setErrorMsg(err instanceof Error ? err.message : 'Could not send link.');
+    }
   }
 
   return (
@@ -52,7 +65,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             placeholder="you@somewhere.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            disabled={status === 'sending'}
+            disabled={status === 'sending' || status === 'sent'}
             required
           />
         </div>
@@ -66,7 +79,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
               margin: '8px 0 0',
             }}
           >
-            Check your email for the link.
+            Check your email. Tap the link to sign in.
           </p>
         )}
         {status === 'error' && errorMsg && (
@@ -89,14 +102,14 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             onClick={onClose}
             disabled={status === 'sending'}
           >
-            CANCEL
+            {status === 'sent' ? 'CLOSE' : 'CANCEL'}
           </button>
           <button
             type="submit"
             className="kit-btn primary"
-            disabled={status === 'sending' || !email.trim()}
+            disabled={status === 'sending' || status === 'sent' || !email.trim()}
           >
-            {status === 'sending' ? 'SENDING…' : 'SEND ME A LINK'}
+            {status === 'sending' ? 'SENDING…' : status === 'sent' ? 'SENT' : 'SEND ME A LINK'}
           </button>
         </div>
       </form>

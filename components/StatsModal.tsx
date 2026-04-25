@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import type { User } from '@supabase/supabase-js';
 import Modal from '@/components/Modal';
 
 type Stats = {
@@ -15,10 +16,11 @@ export type StatsModalProps = {
   open: boolean;
   onClose: () => void;
   refreshKey?: number;
+  user: User | null;
   children?: React.ReactNode;
 };
 
-export default function StatsModal({ open, onClose, refreshKey, children }: StatsModalProps) {
+export default function StatsModal({ open, onClose, refreshKey, user, children }: StatsModalProps) {
   const [stats, setStats] = useState<Stats | null>(null);
 
   useEffect(() => {
@@ -61,6 +63,23 @@ export default function StatsModal({ open, onClose, refreshKey, children }: Stat
       )}
 
       {children}
+
+      {user && (
+        <form action="/auth/signout" method="post" style={{ marginTop: 14 }}>
+          <p
+            style={{
+              fontFamily: 'var(--ff-mono)',
+              fontSize: 11,
+              letterSpacing: '0.06em',
+              color: 'var(--c-green)',
+              margin: '0 0 6px',
+            }}
+          >
+            Signed in as {user.email}
+          </p>
+          <button type="submit" className="kit-btn small">SIGN OUT</button>
+        </form>
+      )}
     </Modal>
   );
 }

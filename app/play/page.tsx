@@ -7,6 +7,7 @@ import ShareButton from '@/components/ShareButton';
 import StatsModal from '@/components/StatsModal';
 import HowToModal from '@/components/HowToModal';
 import { Header, Outcome, PuzzleChips } from '@/components/Chrome';
+import { useUser } from '@/lib/auth-client';
 import { MAX_GUESSES, WORD_LENGTH, type LetterState } from '@/lib/game';
 
 type GuessRecord = {
@@ -82,6 +83,7 @@ export default function PlayPage() {
   const [statsRefreshKey, setStatsRefreshKey] = useState(0);
   const [pressedKey, setPressedKey] = useState<string | null>(null);
 
+  const { user } = useUser();
   const countdown = useCountdown();
 
   useEffect(() => {
@@ -257,7 +259,11 @@ export default function PlayPage() {
   return (
     <>
       <div className="kit-page">
-        <Header onHow={() => setHowOpen(true)} onStats={() => setStatsOpen(true)} />
+        <Header
+          onHow={() => setHowOpen(true)}
+          onStats={() => setStatsOpen(true)}
+          user={user}
+        />
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, width: '100%' }}>
           <PuzzleChips date={date} />
@@ -301,6 +307,7 @@ export default function PlayPage() {
         open={statsOpen}
         onClose={() => setStatsOpen(false)}
         refreshKey={statsRefreshKey}
+        user={user}
       />
       <HowToModal open={howOpen} onClose={() => setHowOpen(false)} />
     </>

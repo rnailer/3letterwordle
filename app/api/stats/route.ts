@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabase, hasSupabaseCredentials } from '@/lib/supabase';
+import { getServerUserId } from '@/lib/auth';
 import { PLAYER_COOKIE } from '@/lib/cookies';
 import { isValidDate } from '@/lib/daily';
 import { MAX_GUESSES } from '@/lib/game';
@@ -38,11 +39,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, reason: 'supabase-not-configured' });
   }
 
+  const userId = await getServerUserId();
   const supabase = createServerSupabase();
   const { error } = await supabase
     .from('plays')
     .upsert(
-      { player_id: playerId, date, guesses, solved },
+      { player_id: playerId, date, guesses, solved, user_id: userId },
       { onConflict: 'player_id,date' },
     );
   if (error) {
@@ -55,17 +57,26 @@ export async function GET(req: NextRequest) {
   const playerId = req.cookies.get(PLAYER_COOKIE)?.value;
   const empty = { plays: [], played: 0, wins: 0, winRate: 0, currentStreak: 0, maxStreak: 0 };
 
-  if (!playerId || !hasSupabaseCredentials()) {
+  if (!hasSupabaseCredentials()) {
+    return NextResponse.json(empty);
+  }
+
+  const userId = await getServerUserId();
+  if (!userId && !playerId) {
     return NextResponse.json(empty);
   }
 
   const supabase = createServerSupabase();
-  const { data, error } = await supabase
+  // Logged-in users see all plays attached to their account (across devices).
+  // Anonymous users see only the current device's plays.
+  const query = supabase
     .from('plays')
     .select('date, guesses, solved')
-    .eq('player_id', playerId)
     .order('date', { ascending: false })
     .limit(365);
+  const { data, error } = userId
+    ? await query.eq('user_id', userId)
+    : await query.eq('player_id', playerId!);
 
   if (error || !data) {
     return NextResponse.json(empty);
@@ -82,7 +93,6 @@ export async function GET(req: NextRequest) {
     else break;
   }
 
-  // Walk the whole list (any order) to find longest consecutive-date solved run
   const sorted = [...data].sort((a, b) => (a.date < b.date ? -1 : 1));
   let maxStreak = 0;
   let run = 0;

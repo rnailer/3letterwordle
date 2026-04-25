@@ -1,11 +1,19 @@
 'use client';
 
+import type { User } from '@supabase/supabase-js';
+
 export type HeaderProps = {
   onHow: () => void;
   onStats: () => void;
+  user: User | null;
 };
 
-export function Header({ onHow, onStats }: HeaderProps) {
+function avatarInitial(user: User): string {
+  const email = user.email ?? '';
+  return email.trim().charAt(0).toUpperCase() || '·';
+}
+
+export function Header({ onHow, onStats, user }: HeaderProps) {
   return (
     <header className="kit-header">
       <div className="kit-logo">
@@ -16,7 +24,25 @@ export function Header({ onHow, onStats }: HeaderProps) {
       </div>
       <div className="kit-header-right">
         <button type="button" className="kit-btn small" onClick={onHow}>HOW</button>
-        <button type="button" className="kit-btn small" onClick={onStats}>STATS</button>
+        {user ? (
+          <button
+            type="button"
+            className="kit-btn small"
+            onClick={onStats}
+            aria-label={`Account: ${user.email ?? 'signed in'}`}
+            style={{
+              width: 32,
+              height: 32,
+              padding: 0,
+              background: 'var(--c-green)',
+              color: 'var(--c-yellow)',
+            }}
+          >
+            {avatarInitial(user)}
+          </button>
+        ) : (
+          <button type="button" className="kit-btn small" onClick={onStats}>STATS</button>
+        )}
       </div>
     </header>
   );
