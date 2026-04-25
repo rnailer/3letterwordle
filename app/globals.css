@@ -128,3 +128,127 @@
     @apply font-sans;
   }
 }
+
+/* =====================================================================
+   3LW design system tokens
+   ---------------------------------------------------------------------
+   Bold, retro-poster identity built on the FT Baile family. Tokens are
+   loaded as a foundation in commit (a); component CSS that consumes
+   them lands in commit (b).
+   ===================================================================== */
+
+:root {
+  /* Core palette — sampled from the FT Baile specimens. */
+  --c-yellow:       #FFD22F;
+  --c-yellow-ink:   #F5B800;
+  --c-sky:          #8EC5E8;
+  --c-sky-deep:     #5FA6D6;
+  --c-green:        #2E7D3F;
+  --c-green-deep:   #1F5A2B;
+  --c-ink:          #0E1015;
+  --c-paper:        #F4EEDC;
+  --c-white:        #FFFFFF;
+  --c-red:          #D7263D;
+  --c-red-deep:     #A8112B;
+
+  /* Semantic — surfaces */
+  --bg-page:        var(--c-yellow);
+  --bg-page-alt:    var(--c-green);
+  --bg-card:        var(--c-sky);
+  --bg-card-warm:   var(--c-yellow);
+  --bg-well:        var(--c-green-deep);
+
+  /* Semantic — foreground */
+  --fg-1:           var(--c-ink);
+  --fg-2:           var(--c-green);
+  --fg-inverse:     var(--c-yellow);
+  --fg-accent:      var(--c-sky);
+
+  /* Semantic — game state */
+  --state-correct:      var(--c-green);
+  --state-correct-ink:  var(--c-yellow);
+  --state-present:      var(--c-yellow-ink);
+  --state-present-ink:  var(--c-ink);
+  --state-absent:       var(--c-ink);
+  --state-absent-ink:   var(--c-sky);
+
+  /* Borders — never 1px hairlines in this system. */
+  --stroke-1:       3px solid var(--c-ink);
+  --stroke-2:       5px solid var(--c-ink);
+
+  /* Radii */
+  --r-sm:           6px;
+  --r-md:           10px;
+  --r-lg:           18px;
+  --r-capsule:      999px;
+
+  /* Hard drop shadows — no soft blurs. */
+  --shadow-tile:    5px 6px 0 var(--c-ink);
+  --shadow-tile-lg: 8px 10px 0 var(--c-ink);
+  --shadow-card:    10px 12px 0 var(--c-ink);
+  --shadow-chip:    3px 3px 0 var(--c-ink);
+
+  /* Spacing — 4px base. */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+
+  /* Motion — tactile, bouncy, never smooth. */
+  --ease-pop:   cubic-bezier(.2, 1.4, .4, 1);
+  --ease-smack: cubic-bezier(.8, -.2, .2, 1.4);
+  --dur-fast:   120ms;
+  --dur-med:    220ms;
+  --dur-slow:   420ms;
+
+  /* Type families — bind to next/font CSS variables wired in app/layout.tsx. */
+  --ff-display:         var(--font-baile), "Arial Black", sans-serif;
+  --ff-display-shadow:  var(--font-baile-shadow), var(--ff-display);
+  --ff-round:           var(--font-baile-rounded), var(--ff-display);
+  --ff-round-shadow:    var(--font-baile-rounded-shadow), var(--ff-round);
+  --ff-script:          var(--font-baile-script), "Brush Script MT", cursive;
+  --ff-script-shadow:   var(--font-baile-script-shadow), var(--ff-script);
+  --ff-script-bulky:    var(--font-baile-script-bulky), var(--ff-script);
+  --ff-script-bulky-sh: var(--font-baile-script-bulky-shadow), var(--ff-script);
+  --ff-west:            var(--font-baile-west), var(--ff-display);
+  --ff-west-shadow:     var(--font-baile-west-shadow), var(--ff-west);
+  --ff-body:            var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --ff-mono:            var(--font-space-mono), ui-monospace, monospace;
+
+  /* Type scale — big, loud, very few steps. */
+  --fs-mega:    120px;
+  --fs-hero:     84px;
+  --fs-display:  56px;
+  --fs-h1:       40px;
+  --fs-h2:       28px;
+  --fs-h3:       20px;
+  --fs-body:     16px;
+  --fs-small:    13px;
+  --fs-micro:    11px;
+
+  /* Line heights */
+  --lh-tight:   0.92;
+  --lh-snug:    1.08;
+  --lh-body:    1.45;
+}
+
+/* Paper-grain utility — overlays a subtle noise texture on any element. */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+  opacity: 0.22;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
