@@ -343,7 +343,7 @@ body.kit {
 .kit-btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--c-ink); background: var(--c-sky-deep); }
 .kit-btn.primary { background: var(--c-green); color: var(--c-yellow); }
 .kit-btn.primary:active { background: var(--c-green-deep); }
-.kit-btn.small { font-size: 12px; padding: 6px 12px; }
+.kit-btn.small { font-size: 16px; padding: 6px 12px; }
 .kit-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: 3px 3px 0 var(--c-ink); }
 
 /* Board */
@@ -416,7 +416,7 @@ body.kit {
 .err { height: 32px; display: flex; align-items: center; justify-content: center; }
 .err-pill {
   font-family: var(--ff-display);
-  font-size: 13px;
+  font-size: 17px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--c-white);
@@ -567,7 +567,7 @@ body.kit {
   font-family: var(--ff-display);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  font-size: 12px;
+  font-size: 16px;
   padding: 6px 10px;
   background: var(--c-yellow);
   border: 3px solid var(--c-ink);
