@@ -31,8 +31,8 @@ export function Header({ onHow, onStats, user }: HeaderProps) {
             onClick={onStats}
             aria-label={`Account: ${user.email ?? 'signed in'}`}
             style={{
-              width: 32,
-              height: 32,
+              width: 40,
+              height: 40,
               padding: 0,
               background: 'var(--c-green)',
               color: 'var(--c-yellow)',
