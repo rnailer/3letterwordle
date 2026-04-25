@@ -40,3 +40,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# claude code local state
+.claude/
+
+# design sources (kept locally, not in repo)
+/design/
+/design-handoff/

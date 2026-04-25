@@ -50,7 +50,10 @@ export default function Board({ guesses, current, shakingRow }: BoardProps) {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div
+      className="flex flex-col gap-2 select-none"
+      style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none' }}
+    >
       {rows.map((row, i) => {
         const shaking = shakingRow === i ? 'animate-[wiggle_0.4s_ease-in-out]' : '';
         return (

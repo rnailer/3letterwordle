@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Board, { type BoardRow } from '@/components/Board';
 import Keyboard from '@/components/Keyboard';
 import ShareButton from '@/components/ShareButton';
@@ -88,6 +88,7 @@ export default function Home() {
   const [submitting, setSubmitting] = useState(false);
   const [statsOpen, setStatsOpen] = useState(false);
   const [statsRefreshKey, setStatsRefreshKey] = useState(0);
+  const [pressedKey, setPressedKey] = useState<string | null>(null);
 
   // Hydrate from localStorage and prune stale entries
   useEffect(() => {
@@ -215,6 +216,43 @@ export default function Home() {
     [current.length, finished, submit],
   );
 
+  const onKeyRef = useRef(onKey);
+  onKeyRef.current = onKey;
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (statsOpen || finished) return;
+
+      const target = e.target as HTMLElement | null;
+      if (target) {
+        const tag = target.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || target.isContentEditable) return;
+      }
+
+      let mapped: string | null = null;
+      if (e.key === 'Enter') {
+        mapped = 'Enter';
+      } else if (e.key === 'Backspace' || e.key === 'Delete') {
+        mapped = 'Backspace';
+      } else if (/^[a-zA-Z]$/.test(e.key)) {
+        mapped = e.key.toLowerCase();
+      }
+
+      if (mapped !== null) {
+        e.preventDefault();
+        onKeyRef.current(mapped);
+        const k = mapped;
+        setPressedKey(k);
+        window.setTimeout(() => {
+          setPressedKey((cur) => (cur === k ? null : cur));
+        }, 150);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [statsOpen, finished]);
+
   const boardRows: BoardRow[] = guesses.map((g) => ({ letters: g.letters, states: g.states }));
 
   return (
@@ -256,7 +294,12 @@ export default function Home() {
           )}
         </div>
 
-        <Keyboard letterStates={letterStates} onKey={onKey} disabled={finished || submitting} />
+        <Keyboard
+          letterStates={letterStates}
+          onKey={onKey}
+          disabled={finished || submitting}
+          pressedKey={pressedKey}
+        />
       </main>
 
       <StatsModal
