@@ -19,14 +19,27 @@ import { fileURLToPath } from 'node:url';
 
 const SLURS = new Set(['abo', 'gyp', 'jew', 'nip', 'wop', 'yid']);
 
-// Existing 49-word answer seed. Keep stable to preserve daily picker output.
-// TODO: expand answer set
+// 150 hand-picked common 3-letter words for the daily answer pool.
+// Curated for kid-safe, broadly recognized English: nouns, simple verbs,
+// common adjectives. No archaic forms, abbreviations, or interjections.
+// Note: changing the length of this list shifts the FNV-1a daily picker,
+// so today's word will be different from previous lists.
 const ANSWERS_SEED = [
-  'cat', 'dog', 'bat', 'hat', 'mat', 'rat', 'sat', 'fat', 'pat', 'tap',
-  'top', 'tip', 'pop', 'pup', 'cup', 'cub', 'bud', 'bug', 'bus',
-  'run', 'sun', 'fun', 'gun', 'bun', 'nun', 'pun', 'ran', 'man', 'can',
-  'ban', 'fan', 'pan', 'tan', 'van', 'dig', 'fig', 'big', 'wig', 'jig',
-  'bed', 'red', 'led', 'fed', 'wed', 'box', 'fox', 'mix', 'six', 'fix',
+  'ace', 'act', 'add', 'age', 'aid', 'aim', 'air', 'ant', 'ape', 'arm',
+  'art', 'ash', 'ask', 'ate', 'awe', 'bag', 'ban', 'bar', 'bat', 'bay',
+  'bed', 'bee', 'beg', 'bet', 'bid', 'big', 'bin', 'bit', 'box', 'boy',
+  'bud', 'bug', 'bun', 'bus', 'buy', 'cab', 'can', 'cap', 'car', 'cat',
+  'cow', 'cry', 'cub', 'cue', 'cup', 'cut', 'dad', 'day', 'den', 'did',
+  'dig', 'dim', 'dip', 'dog', 'dot', 'dry', 'due', 'dye', 'ear', 'eat',
+  'egg', 'ego', 'elf', 'end', 'era', 'eve', 'eye', 'fan', 'far', 'fat',
+  'fed', 'fee', 'few', 'fig', 'fit', 'fix', 'fly', 'foe', 'fog', 'for',
+  'fox', 'fry', 'fun', 'gap', 'gas', 'gel', 'gem', 'get', 'gum', 'gun',
+  'gut', 'guy', 'gym', 'ham', 'hat', 'hen', 'her', 'hey', 'hid', 'hip',
+  'hit', 'hog', 'hop', 'hot', 'how', 'hub', 'hue', 'hug', 'hum', 'hut',
+  'ice', 'icy', 'ill', 'imp', 'ink', 'ire', 'ivy', 'jab', 'jam', 'jar',
+  'jaw', 'jet', 'jig', 'job', 'jog', 'joy', 'jug', 'key', 'kid', 'kit',
+  'lab', 'lad', 'lag', 'lap', 'law', 'lay', 'led', 'leg', 'let', 'lid',
+  'lie', 'lip', 'lit', 'log', 'lot', 'low', 'mad', 'man', 'map', 'mat',
 ];
 
 const here = dirname(fileURLToPath(import.meta.url));
