@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "build-words": "tsx scripts/build-words.ts",
-    "build-brand": "tsx scripts/build-brand.ts"
+    "build-brand": "tsx scripts/build-brand.ts",
+    "test:guess-api": "tsx scripts/test-guess-api.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",

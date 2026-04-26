@@ -167,7 +167,7 @@ export default function PlayPage() {
       const res = await fetch('/api/guess', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ guess: current, date }),
+        body: JSON.stringify({ guess: current, date, priorGuesses: guesses.length }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -186,6 +186,9 @@ export default function PlayPage() {
         setFinished(true);
         recordAndShowStats(nextGuesses.length, true);
       } else if (nextGuesses.length >= MAX_GUESSES) {
+        // Final attempt missed — server returns the answer so the lose panel
+        // can render "THE WORD WAS …". Without this, the slot stays blank.
+        if (data.answer) setAnswer(data.answer);
         await new Promise((r) => setTimeout(r, 500));
         setFinished(true);
         setSolved(false);
