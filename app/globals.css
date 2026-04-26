@@ -586,8 +586,8 @@ body.kit {
 }
 .outcome .word {
   font-family: var(--ff-display);
+  font-size: 30px;
   color: var(--c-green);
-  text-shadow: 3px 3px 0 var(--c-ink);
 }
 @keyframes kit-drop {
   0%{transform:translateY(-20px) rotate(-4deg);opacity:0}
@@ -865,6 +865,7 @@ body.kit {
   .empty-stats h3 { font-size: 18px; }
   .outcome .script { font-size: 42px; }
   .outcome .sub { font-size: 22px; }
+  .outcome .word { font-size: 26px; }
 
   .stat .n { font-size: 26px; }
   .streak-banner { padding: 12px 14px; gap: 10px; }
