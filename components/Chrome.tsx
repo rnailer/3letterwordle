@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import type { User } from '@supabase/supabase-js';
 
 export type HeaderProps = {
@@ -16,14 +17,15 @@ function avatarInitial(user: User): string {
 export function Header({ onHow, onStats, user }: HeaderProps) {
   return (
     <header className="kit-header">
-      <div className="kit-logo">
-        <div className="lt y">3</div>
-        <div className="lt s">L</div>
-        <div className="lt g">D</div>
-        <div className="name">daily</div>
-      </div>
+      <Link href="/" className="kit-logo" aria-label="Home">
+        <span className="lt y">3</span>
+        <span className="lt s">L</span>
+        <span className="lt g">D</span>
+        <span className="name">daily</span>
+      </Link>
       <div className="kit-header-right">
         <button type="button" className="kit-btn small" onClick={onHow}>HOW</button>
+        <Link href="/about" className="kit-btn small">ABOUT</Link>
         {user ? (
           <button
             type="button"

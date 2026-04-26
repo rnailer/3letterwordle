@@ -115,15 +115,16 @@ export default function Intro() {
     <>
       <div className="kit-page" style={{ paddingTop: 24 }}>
         <header className="kit-header">
-          <div className="kit-logo">
-            <div className="lt y">3</div>
-            <div className="lt s">L</div>
-            <div className="lt g">D</div>
-          </div>
+          <Link href="/" className="kit-logo" aria-label="Home">
+            <span className="lt y">3</span>
+            <span className="lt s">L</span>
+            <span className="lt g">D</span>
+          </Link>
           <div className="kit-header-right">
             <button type="button" className="kit-btn small" onClick={() => setHowOpen(true)}>
               HOW
             </button>
+            <Link href="/about" className="kit-btn small">ABOUT</Link>
             {user ? (
               <button
                 type="button"
