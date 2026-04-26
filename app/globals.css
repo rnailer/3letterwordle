@@ -1205,7 +1205,7 @@ body.kit {
 .kit-footer .dot { opacity: 0.55; }
 
 .legal {
-  background: var(--c-paper);
+  background: var(--c-yellow);
   min-height: 100vh;
   flex: 1;
   width: 100%;
@@ -1236,7 +1236,7 @@ body.kit {
   line-height: 1;
   letter-spacing: 0.02em;
   margin: 28px 0 4px;
-  text-shadow: 3px 3px 0 var(--c-yellow);
+  text-shadow: 3px 3px 0 var(--c-sky);
 }
 .legal-page .updated {
   font-family: var(--ff-mono);
@@ -1277,7 +1277,7 @@ body.kit {
 .legal-page code {
   font-family: var(--ff-mono);
   font-size: 13px;
-  background: var(--c-yellow);
+  background: var(--c-paper);
   border: 2px solid var(--c-ink);
   border-radius: 4px;
   padding: 0 4px;
