@@ -578,7 +578,7 @@ body.kit {
 }
 .outcome .sub {
   font-family: var(--ff-display);
-  font-size: 18px;
+  font-size: 26px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -862,7 +862,7 @@ body.kit {
   .empty-stats .glyph { font-size: 56px; }
   .empty-stats h3 { font-size: 18px; }
   .outcome .script { font-size: 42px; }
-  .outcome .sub { font-size: 16px; }
+  .outcome .sub { font-size: 22px; }
 
   .stat .n { font-size: 26px; }
   .streak-banner { padding: 12px 14px; gap: 10px; }
