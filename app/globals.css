@@ -470,6 +470,39 @@ body.kit {
 .intro-meta b { font-family: var(--ff-display); letter-spacing: 0.05em; }
 
 /* Auth form */
+.kit-btn.google {
+  width: 100%;
+  background: var(--c-paper);
+  color: var(--c-ink);
+  gap: 10px;
+  font-size: 15px;
+  padding: 10px 16px;
+  margin-top: 4px;
+}
+.kit-btn.google:active { background: var(--c-yellow); }
+.kit-btn.google svg { display: block; flex: 0 0 auto; }
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--ff-display);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-green);
+  margin: 14px 0;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: var(--c-ink);
+  opacity: 0.6;
+  border-radius: 2px;
+}
+
 .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
 .field label {
   font-family: var(--ff-display);
