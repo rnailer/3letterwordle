@@ -25,15 +25,45 @@ function formatLongDate(date: string): string {
 
 function friendlyAuthError(raw: string): string {
   const lower = raw.toLowerCase();
+
+  // Google OAuth config / server-side issues. User can't fix these, so the
+  // copy nudges them to the email flow instead. Match the specific phrases
+  // Supabase GoTrue surfaces when the Google token exchange fails.
+  if (
+    lower.includes('unable to exchange external code') ||
+    lower.includes('invalid_client') ||
+    lower.includes('redirect_uri_mismatch') ||
+    lower.includes('invalid_request') ||
+    lower.includes('invalid_scope')
+  ) {
+    return 'GOOGLE SIGN-IN UNAVAILABLE — TRY EMAIL';
+  }
+
+  // User cancelled the OAuth consent screen on Google's side.
+  if (
+    lower.includes('access_denied') ||
+    lower.includes('user denied') ||
+    lower.includes('canceled') ||
+    lower.includes('cancelled')
+  ) {
+    return 'SIGN-IN CANCELLED';
+  }
+
+  // Magic-link / PKCE expiry — most common failure for the email flow.
   if (
     lower.includes('expired') ||
-    lower.includes('invalid') ||
     lower.includes('otp') ||
     lower.includes('verifier') ||
     lower.includes('pkce')
   ) {
     return 'LINK EXPIRED — TRY AGAIN';
   }
+
+  // Generic 'invalid' lands here — usually a stale code that just needs a retry.
+  if (lower.includes('invalid')) {
+    return 'LINK EXPIRED — TRY AGAIN';
+  }
+
   return 'AUTH FAILED — TRY AGAIN';
 }
 
