@@ -23,6 +23,25 @@ function formatLongDate(date: string): string {
   return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
+// 2026-04-27 is puzzle No. 1; each subsequent day increments by 1.
+const PUZZLE_EPOCH = '2026-04-27';
+function puzzleNumberFor(date: string): number {
+  const a = new Date(`${date}T00:00:00`).getTime();
+  const b = new Date(`${PUZZLE_EPOCH}T00:00:00`).getTime();
+  return Math.floor((a - b) / 86400000) + 1;
+}
+
+function ordinal(n: number): string {
+  const v = n % 100;
+  if (v >= 11 && v <= 13) return `${n}th`;
+  switch (n % 10) {
+    case 1: return `${n}st`;
+    case 2: return `${n}nd`;
+    case 3: return `${n}rd`;
+    default: return `${n}th`;
+  }
+}
+
 function friendlyAuthError(raw: string): string {
   const lower = raw.toLowerCase();
 
@@ -109,7 +128,7 @@ export default function Intro() {
 
   const today = todayLocalDate();
   const dateLabel = formatLongDate(today);
-  const num = today.slice(-2);
+  const num = puzzleNumberFor(today);
 
   return (
     <>
@@ -199,6 +218,8 @@ export default function Intro() {
             <b>{dateLabel}</b>
             <br />
             No. {num}
+            <br />
+            This is the {ordinal(num)} daily puzzle
           </div>
         </div>
 
@@ -266,28 +287,28 @@ function Billboard() {
           y="76"
           textAnchor="middle"
           fontFamily="var(--ff-display)"
-          fontSize="40"
+          fontSize="44"
           fontWeight="900"
           fill="var(--c-ink)"
           letterSpacing="2"
           opacity="0.95"
           transform="translate(3,4)"
         >
-          THREE LTR
+          3 letter
         </text>
         <text
           x="218"
           y="76"
           textAnchor="middle"
           fontFamily="var(--ff-display)"
-          fontSize="40"
+          fontSize="44"
           fontWeight="900"
           fill="var(--c-sky)"
           stroke="var(--c-ink)"
           strokeWidth="2"
           letterSpacing="2"
         >
-          THREE LTR
+          3 letter
         </text>
 
         <polygon
@@ -304,11 +325,11 @@ function Billboard() {
           fontSize="56"
           fontWeight="900"
           fill="var(--c-ink)"
-          letterSpacing="4"
+          letterSpacing="2"
           opacity="0.95"
           transform="translate(3,4)"
         >
-          WORD.
+          Daily.
         </text>
         <text
           x="218"
@@ -320,9 +341,9 @@ function Billboard() {
           fill="var(--c-yellow)"
           stroke="var(--c-ink)"
           strokeWidth="2"
-          letterSpacing="4"
+          letterSpacing="2"
         >
-          WORD.
+          Daily.
         </text>
 
         <circle
@@ -344,28 +365,6 @@ function Billboard() {
           ®
         </text>
 
-        <polygon
-          points="376,108 422,134 422,196 376,222"
-          fill="var(--c-ink)"
-          transform="translate(6,8)"
-        />
-        <polygon
-          points="376,108 422,134 422,196 376,222"
-          fill="var(--c-yellow)"
-          stroke="var(--c-ink)"
-          strokeWidth="4"
-        />
-        <text
-          fontFamily="var(--ff-display)"
-          fontSize="16"
-          fontWeight="900"
-          fill="var(--c-ink)"
-          letterSpacing="4"
-          textAnchor="middle"
-          transform="translate(402 165) rotate(-90)"
-        >
-          DAILY
-        </text>
       </svg>
     </div>
   );
