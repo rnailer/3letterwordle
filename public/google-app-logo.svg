@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="52.8" fill="#FFD22F" stroke="#0E1015" stroke-width="6"></rect>
+  
+  <g transform="translate(60.599999999999994 120) rotate(-5)">
+    <rect x="-31.200000000000003" y="-43.199999999999996" width="62.400000000000006" height="86.39999999999999" rx="12" fill="#FFD22F" stroke="#0E1015" stroke-width="6"></rect>
+    <text x="0" y="0" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="72" fill="#0E1015" text-anchor="middle" dominant-baseline="central">3</text>
+  </g>
+  
+  <g transform="translate(120 124.32) rotate(0)">
+    <rect x="-31.200000000000003" y="-43.199999999999996" width="62.400000000000006" height="86.39999999999999" rx="12" fill="#8EC5E8" stroke="#0E1015" stroke-width="6"></rect>
+    <text x="0" y="0" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="72" fill="#0E1015" text-anchor="middle" dominant-baseline="central">L</text>
+  </g>
+  
+  <g transform="translate(179.4 120) rotate(5)">
+    <rect x="-31.200000000000003" y="-43.199999999999996" width="62.400000000000006" height="86.39999999999999" rx="12" fill="#2E7D3F" stroke="#0E1015" stroke-width="6"></rect>
+    <text x="0" y="0" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="72" fill="#FFD22F" text-anchor="middle" dominant-baseline="central">D</text>
+  </g>
+</svg>

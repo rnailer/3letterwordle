@@ -1,18 +1,19 @@
 /**
- * Rasterizes brand SVGs into the PNG variants Next.js expects under app/.
+ * Fallback rasterizer for brand SVGs → PNG variants under app/.
+ *
+ * NOTE: The canonical PNG outputs in app/ come from the design tool and
+ * use FT Baile properly. This script is a no-fonts fallback only — sharp
+ * doesn't have access to the FT Baile family, so its output substitutes
+ * system fonts and looks visibly different. Use it only when the design
+ * tool isn't available and you need *some* asset to ship.
  *
  * Run with: npm run build-brand
  *
  * Sources live in brand/ so they don't get served as static routes.
  * Outputs:
- *   brand/icon.svg          → app/icon.png            (512×512)
- *   brand/icon.svg          → app/apple-icon.png      (180×180)
- *   brand/og-image.svg      → app/opengraph-image.png (1200×630)
- *
- * sharp ships with the Next install, so no extra dependency is needed.
- * Font rendering inside the SVGs uses widely-available system stacks
- * (Arial Black / Helvetica) so the rasterized output is consistent
- * across machines.
+ *   brand/icon.svg     → app/icon.png            (512×512)
+ *   brand/icon.svg     → app/apple-icon.png      (180×180)
+ *   brand/og-image.svg → app/opengraph-image.png (1200×630)
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
