@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.4" fill="#0E1015" fill-opacity="0.07"></circle>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#FFD22F"></rect>
+  <rect width="1200" height="630" fill="url(#dots)"></rect>
+
+  <g font-family="'Space Mono', 'Courier New', monospace" font-weight="700">
+    <text x="80" y="120" font-size="20" fill="#2E7D3F" letter-spacing="4.4">3LD · DAILY</text>
+  </g>
+
+  <g transform="translate(80 200)">
+    <g transform="translate(75 75) rotate(-5)">
+      <rect x="-65" y="-80" width="130" height="160" rx="14" fill="#0E1015"></rect>
+      <rect x="-65" y="-80" width="130" height="160" rx="14" fill="#FFD22F" stroke="#0E1015" stroke-width="7" transform="translate(-8 -10)"></rect>
+      <text x="-8" y="-10" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="150" fill="#0E1015" text-anchor="middle" dominant-baseline="central">3</text>
+    </g>
+    <g transform="translate(225 88)">
+      <rect x="-65" y="-80" width="130" height="160" rx="14" fill="#0E1015"></rect>
+      <rect x="-65" y="-80" width="130" height="160" rx="14" fill="#8EC5E8" stroke="#0E1015" stroke-width="7" transform="translate(-8 -10)"></rect>
+      <text x="-8" y="-10" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="150" fill="#0E1015" text-anchor="middle" dominant-baseline="central">L</text>
+    </g>
+    <g transform="translate(375 75) rotate(5)">
+      <rect x="-65" y="-80" width="130" height="160" rx="14" fill="#0E1015"></rect>
+      <rect x="-65" y="-80" width="130" height="160" rx="14" fill="#2E7D3F" stroke="#0E1015" stroke-width="7" transform="translate(-8 -10)"></rect>
+      <text x="-8" y="-10" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="150" fill="#FFD22F" text-anchor="middle" dominant-baseline="central">D</text>
+    </g>
+  </g>
+
+  <g font-family="Georgia, serif" font-style="italic" fill="#0E1015">
+    <text x="80" y="465" font-size="92" font-weight="700">Small words,</text>
+    <text x="80" y="540" font-size="92" font-weight="700">big stakes.</text>
+  </g>
+
+  <text x="80" y="595" font-family="'Space Mono', monospace" font-weight="700" font-size="16" fill="#0E1015" letter-spacing="3.2">THREE LETTERS · SIX TRIES · ONE WORD A DAY</text>
+
+  <g transform="translate(820 165) rotate(5)">
+    <g transform="translate(0 0)">
+      <rect x="6" y="8" width="90" height="90" rx="10" fill="#0E1015"></rect>
+      <rect x="0" y="0" width="90" height="90" rx="10" fill="#0E1015" stroke="#0E1015" stroke-width="5"></rect>
+      <text x="45" y="45" font-family="Arial Black, sans-serif" font-weight="900" font-size="58" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">P</text>
+    </g>
+    <g transform="translate(102 0)">
+      <rect x="6" y="8" width="90" height="90" rx="10" fill="#0E1015"></rect>
+      <rect x="0" y="0" width="90" height="90" rx="10" fill="#FFD22F" stroke="#0E1015" stroke-width="5"></rect>
+      <text x="45" y="45" font-family="Arial Black, sans-serif" font-weight="900" font-size="58" fill="#0E1015" text-anchor="middle" dominant-baseline="central">A</text>
+    </g>
+    <g transform="translate(204 0)">
+      <rect x="6" y="8" width="90" height="90" rx="10" fill="#0E1015"></rect>
+      <rect x="0" y="0" width="90" height="90" rx="10" fill="#0E1015" stroke="#0E1015" stroke-width="5"></rect>
+      <text x="45" y="45" font-family="Arial Black, sans-serif" font-weight="900" font-size="58" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">T</text>
+    </g>
+    <g transform="translate(0 102)">
+      <rect x="6" y="8" width="90" height="90" rx="10" fill="#0E1015"></rect>
+      <rect x="0" y="0" width="90" height="90" rx="10" fill="#2E7D3F" stroke="#0E1015" stroke-width="5"></rect>
+      <text x="45" y="45" font-family="Arial Black, sans-serif" font-weight="900" font-size="58" fill="#FFD22F" text-anchor="middle" dominant-baseline="central">C</text>
+    </g>
+    <g transform="translate(102 102)">
+      <rect x="6" y="8" width="90" height="90" rx="10" fill="#0E1015"></rect>
+      <rect x="0" y="0" width="90" height="90" rx="10" fill="#2E7D3F" stroke="#0E1015" stroke-width="5"></rect>
+      <text x="45" y="45" font-family="Arial Black, sans-serif" font-weight="900" font-size="58" fill="#FFD22F" text-anchor="middle" dominant-baseline="central">A</text>
+    </g>
+    <g transform="translate(204 102)">
+      <rect x="6" y="8" width="90" height="90" rx="10" fill="#0E1015"></rect>
+      <rect x="0" y="0" width="90" height="90" rx="10" fill="#2E7D3F" stroke="#0E1015" stroke-width="5"></rect>
+      <text x="45" y="45" font-family="Arial Black, sans-serif" font-weight="900" font-size="58" fill="#FFD22F" text-anchor="middle" dominant-baseline="central">T</text>
+    </g>
+    <g transform="translate(0 204)">
+      <rect x="6" y="8" width="90" height="90" rx="10" fill="#0E1015"></rect>
+      <rect x="0" y="0" width="90" height="90" rx="10" fill="#F4EEDC" stroke="#0E1015" stroke-width="5"></rect>
+    </g>
+    <g transform="translate(102 204)">
+      <rect x="6" y="8" width="90" height="90" rx="10" fill="#0E1015"></rect>
+      <rect x="0" y="0" width="90" height="90" rx="10" fill="#F4EEDC" stroke="#0E1015" stroke-width="5"></rect>
+    </g>
+    <g transform="translate(204 204)">
+      <rect x="6" y="8" width="90" height="90" rx="10" fill="#0E1015"></rect>
+      <rect x="0" y="0" width="90" height="90" rx="10" fill="#F4EEDC" stroke="#0E1015" stroke-width="5"></rect>
+    </g>
+  </g>
+</svg>

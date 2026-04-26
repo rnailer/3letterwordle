@@ -3,8 +3,8 @@ import Link from 'next/link';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — 3 Letter Wordle',
-  description: 'What data 3 Letter Wordle collects, why, and your rights over it.',
+  title: 'Privacy Policy — 3 Letter Daily',
+  description: 'What data 3 Letter Daily collects, why, and your rights over it.',
 };
 
 const LAST_UPDATED = 'April 26, 2026';
@@ -17,7 +17,7 @@ export default function PrivacyPage() {
           <Link href="/" className="kit-logo" aria-label="Back to home">
             <span className="lt y">3</span>
             <span className="lt s">L</span>
-            <span className="lt g">W</span>
+            <span className="lt g">D</span>
           </Link>
           <Link href="/" className="kit-btn small">← BACK</Link>
         </header>
@@ -26,7 +26,7 @@ export default function PrivacyPage() {
         <div className="updated">Last updated: {LAST_UPDATED}</div>
 
         <p>
-          3 Letter Wordle is a small daily word-puzzle game. This page explains what data
+          3 Letter Daily is a small daily word-puzzle game. This page explains what data
           we collect, why, where it lives, and what you can do about it. Plain English,
           no legalese.
         </p>

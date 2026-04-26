@@ -115,11 +115,11 @@ const baileWestShadow = localFont({
   display: 'swap',
 });
 
-const SITE_NAME = '3 Letter Wordle';
+const SITE_NAME = '3 Letter Daily';
 const SITE_DESCRIPTION = 'Small words, big stakes. A daily 3-letter word puzzle — three letters, six tries, one word a day.';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.3letterwordle.com'),
+  metadataBase: new URL('https://www.3letterdaily.com'),
   title: SITE_NAME,
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -127,7 +127,7 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
     type: 'website',
-    url: 'https://www.3letterwordle.com',
+    url: 'https://www.3letterdaily.com',
     siteName: SITE_NAME,
   },
   twitter: {

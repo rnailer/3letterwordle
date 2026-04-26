@@ -19,7 +19,7 @@ export function Header({ onHow, onStats, user }: HeaderProps) {
       <div className="kit-logo">
         <div className="lt y">3</div>
         <div className="lt s">L</div>
-        <div className="lt g">W</div>
+        <div className="lt g">D</div>
         <div className="name">daily</div>
       </div>
       <div className="kit-header-right">

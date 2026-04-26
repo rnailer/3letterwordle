@@ -3,8 +3,8 @@ import Link from 'next/link';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service — 3 Letter Wordle',
-  description: 'The rules for using 3 Letter Wordle. Plain English, no legalese.',
+  title: 'Terms of Service — 3 Letter Daily',
+  description: 'The rules for using 3 Letter Daily. Plain English, no legalese.',
 };
 
 const LAST_UPDATED = 'April 26, 2026';
@@ -17,7 +17,7 @@ export default function TermsPage() {
           <Link href="/" className="kit-logo" aria-label="Back to home">
             <span className="lt y">3</span>
             <span className="lt s">L</span>
-            <span className="lt g">W</span>
+            <span className="lt g">D</span>
           </Link>
           <Link href="/" className="kit-btn small">← BACK</Link>
         </header>
@@ -26,7 +26,7 @@ export default function TermsPage() {
         <div className="updated">Last updated: {LAST_UPDATED}</div>
 
         <p>
-          3 Letter Wordle is a free daily word-puzzle game. By using it, you agree to these
+          3 Letter Daily is a free daily word-puzzle game. By using it, you agree to these
           terms. Plain English, short and direct.
         </p>
 

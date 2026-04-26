@@ -130,7 +130,7 @@
 }
 
 /* =====================================================================
-   3LW design system tokens
+   3LD design system tokens
    ---------------------------------------------------------------------
    Bold, retro-poster identity built on the FT Baile family. Tokens are
    loaded as a foundation in commit (a); component CSS that consumes
@@ -254,7 +254,7 @@
 }
 
 /* =====================================================================
-   3LW kit styles — ported from prototype kit.css
+   3LD kit styles — ported from prototype kit.css
    ---------------------------------------------------------------------
    Ported as global rules. Kept under body.kit so the existing
    shadcn/Tailwind-driven UI remains untouched on routes that don't opt

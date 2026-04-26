@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const BASE = 'https://www.3letterwordle.com';
+const BASE = 'https://www.3letterdaily.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

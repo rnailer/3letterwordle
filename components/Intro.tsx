@@ -118,7 +118,7 @@ export default function Intro() {
           <div className="kit-logo">
             <div className="lt y">3</div>
             <div className="lt s">L</div>
-            <div className="lt g">W</div>
+            <div className="lt g">D</div>
           </div>
           <div className="kit-header-right">
             <button type="button" className="kit-btn small" onClick={() => setHowOpen(true)}>
@@ -154,7 +154,7 @@ export default function Intro() {
           <div className="intro-mark">
             <div className="lt y">3</div>
             <div className="lt s">L</div>
-            <div className="lt g">W</div>
+            <div className="lt g">D</div>
           </div>
           <p className="intro-sub">
             Small words,

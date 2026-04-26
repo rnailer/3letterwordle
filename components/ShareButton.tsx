@@ -18,7 +18,7 @@ export type ShareButtonProps = {
 export function buildShareText(date: string, results: LetterState[][], solved: boolean): string {
   const score = solved ? `${results.length}/6` : 'X/6';
   const grid = results.map((row) => row.map((s) => EMOJI[s]).join('')).join('\n');
-  return `3LW ${date} ${score}\n\n${grid}\n\nhttps://3letterwordle.com`;
+  return `3LD ${date} ${score}\n\n${grid}\n\nhttps://3letterdaily.com`;
 }
 
 export default function ShareButton({ date, results, solved }: ShareButtonProps) {
@@ -40,7 +40,7 @@ export default function ShareButton({ date, results, solved }: ShareButtonProps)
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'stretch', width: '100%', maxWidth: 320 }}>
       <div className="share-card">
         <div className="head">
-          <span>3LW</span>
+          <span>3LD</span>
           <span>#{date.slice(-2)} {score}</span>
         </div>
         <div className="grid">

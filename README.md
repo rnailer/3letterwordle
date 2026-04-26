@@ -1,4 +1,4 @@
-# 3 Letter Wordle
+# 3 Letter Daily
 
 A daily 3-letter word puzzle. Next.js 15 (App Router) + TypeScript + Tailwind + shadcn/ui + Supabase, deployed to Vercel.
 
@@ -70,6 +70,6 @@ supabase/schema.sql
 ## Deploy to Vercel
 
 1. Push this repo to GitHub.
-2. Import into Vercel, attach to the `3letterwordle.com` domain.
+2. Import into Vercel, attach to the `3letterdaily.com` domain.
 3. In Vercel → Project → Settings → Environment Variables, add all three env vars listed above.
 4. Run `supabase/schema.sql` against your Supabase project.
