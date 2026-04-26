@@ -55,7 +55,20 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   const playerId = req.cookies.get(PLAYER_COOKIE)?.value;
-  const empty = { plays: [], played: 0, wins: 0, winRate: 0, currentStreak: 0, maxStreak: 0 };
+  const url = new URL(req.url);
+  const dateParam = url.searchParams.get('date');
+
+  const emptyDistribution = Array.from({ length: MAX_GUESSES }, () => 0);
+  const empty = {
+    plays: [],
+    played: 0,
+    wins: 0,
+    winRate: 0,
+    currentStreak: 0,
+    maxStreak: 0,
+    distribution: emptyDistribution,
+    lastGameGuessCount: null as number | null,
+  };
 
   if (!hasSupabaseCredentials()) {
     return NextResponse.json(empty);
@@ -110,6 +123,28 @@ export async function GET(req: NextRequest) {
     prev = p.date;
   }
 
+  // Bucket counts: index 0 = solved in 1 guess, … index 5 = solved in 6 guesses.
+  // Lost games (solved=false) are intentionally excluded.
+  const distribution = Array.from({ length: MAX_GUESSES }, () => 0);
+  for (const p of data) {
+    if (
+      p.solved &&
+      Number.isInteger(p.guesses) &&
+      p.guesses >= 1 &&
+      p.guesses <= MAX_GUESSES
+    ) {
+      distribution[p.guesses - 1] += 1;
+    }
+  }
+
+  // Today's solved guess count, if the client tells us its local date.
+  // Used by the StatsModal to highlight (and animate) the matching row.
+  let lastGameGuessCount: number | null = null;
+  if (typeof dateParam === 'string' && isValidDate(dateParam)) {
+    const todayPlay = data.find((p) => p.date === dateParam && p.solved);
+    if (todayPlay) lastGameGuessCount = todayPlay.guesses;
+  }
+
   return NextResponse.json({
     plays: data,
     played,
@@ -117,5 +152,7 @@ export async function GET(req: NextRequest) {
     winRate,
     currentStreak,
     maxStreak,
+    distribution,
+    lastGameGuessCount,
   });
 }
