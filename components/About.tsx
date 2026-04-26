@@ -109,7 +109,8 @@ export default function About() {
           </p>
           <p>
             Make of that what you will. The robots are coming for our jobs, allegedly, and on the
-            evidence of this weekend they&rsquo;re going to be <em>annoyingly polite</em> about it.
+            evidence of this weekend they&rsquo;re going to be <em>annoyingly polite</em>{' '}
+            about it.
             In the meantime: there&rsquo;s a new word at midnight. Bring it to your group chat.
             Hijack someone&rsquo;s Saturday morning. Make Amit guess.
           </p>

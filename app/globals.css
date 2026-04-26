@@ -942,6 +942,8 @@ body.kit {
   font-size: 14px;
   line-height: 1.4;
   margin: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .at-body em { font-style: normal; font-weight: 700; }
 .at-ts {
