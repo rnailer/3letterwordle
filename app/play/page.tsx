@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Board, { type BoardRow } from '@/components/Board';
+import Footer from '@/components/Footer';
 import Keyboard from '@/components/Keyboard';
 import ShareButton from '@/components/ShareButton';
 import StatsModal from '@/components/StatsModal';
@@ -301,6 +302,8 @@ export default function PlayPage() {
           disabled={finished || submitting}
           pressedKey={pressedKey}
         />
+
+        <Footer />
       </div>
 
       <StatsModal

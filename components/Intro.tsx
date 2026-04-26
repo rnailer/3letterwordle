@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import AuthModal from '@/components/AuthModal';
+import Footer from '@/components/Footer';
 import HowToModal from '@/components/HowToModal';
 import StatsModal from '@/components/StatsModal';
 import { useUser } from '@/lib/auth-client';
@@ -169,6 +170,8 @@ export default function Intro() {
             No. {num}
           </div>
         </div>
+
+        <Footer />
       </div>
 
       <HowToModal open={howOpen} onClose={() => setHowOpen(false)} />
