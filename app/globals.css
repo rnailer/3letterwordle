@@ -400,8 +400,10 @@ body.kit {
 .key {
   flex: 1; min-width: 28px; height: 48px;
   display: grid; place-items: center;
-  font-family: var(--ff-display);
-  font-size: 16px;
+  font-family: var(--ff-body);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   background: var(--c-sky);
   color: var(--c-ink);
@@ -411,7 +413,7 @@ body.kit {
   cursor: pointer;
   transition: transform var(--dur-fast), box-shadow var(--dur-fast), background var(--dur-fast);
 }
-.key.wide { flex: 1.6; font-size: 12px; letter-spacing: 0.08em; }
+.key.wide { flex: 1.6; font-size: 14px; letter-spacing: 0.08em; }
 .key:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--c-ink); }
 .key:active, .key.pressed { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--c-ink); background: var(--c-sky-deep); }
 .key.correct { background: var(--c-green); color: var(--c-yellow); }
@@ -842,8 +844,8 @@ body.kit {
 
   .kb { gap: 5px; max-width: 100%; }
   .kb-row { gap: 4px; }
-  .key { min-width: 24px; height: 44px; font-size: 14px; box-shadow: 2px 2px 0 var(--c-ink); }
-  .key.wide { font-size: 10px; flex: 1.4; }
+  .key { min-width: 24px; height: 44px; font-size: 16px; box-shadow: 2px 2px 0 var(--c-ink); }
+  .key.wide { font-size: 12px; flex: 1.4; }
 
   .intro { padding: 8px 16px 32px; gap: 14px; }
   .intro-mark { gap: 8px; }
