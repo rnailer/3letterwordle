@@ -759,7 +759,7 @@ body.kit {
 }
 .about-lede {
   font-family: var(--ff-body);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.55;
   margin: 12px 0 0;
 }
@@ -790,7 +790,7 @@ body.kit {
   letter-spacing: -0.005em;
 }
 .about-section p {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.55;
   margin: 0 0 14px;
 }
@@ -1116,7 +1116,7 @@ body.kit {
 }
 
 .about-outro { margin-top: 24px; }
-.about-outro p { font-size: 17px; line-height: 1.5; }
+.about-outro p { font-size: 19px; line-height: 1.5; }
 
 .about-credits {
   background: var(--c-green);

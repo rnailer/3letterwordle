@@ -100,8 +100,9 @@ export default function About() {
             hundred prompts and a slightly concerning amount of coffee.
           </p>
           <p>
-            It used to take a small team a quarter to ship something like this. I built it on the
-            couch, in pyjamas, while half-watching a Liverpool match. Claude Design did the brand
+            It used to take a small team a quarter to ship something like this. I built it
+            between kiddy party drop offs, going to the park for a nap. Karaoke, a wicked
+            hangover and more park visits with 99&rsquo;s of course. Claude Design did the brand
             and screen states. Claude Code wrote the Next.js app, the Supabase schema, the
             share-card generator, and the keyboard that mirrors tile state. I mostly typed
             sentences and clicked accept.
