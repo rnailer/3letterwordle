@@ -139,7 +139,7 @@ export default function PlayPage() {
     setTimeout(() => setError((e) => (e === msg ? null : e)), 1800);
   }, []);
 
-  const recordAndShowStats = useCallback(
+  const recordPlay = useCallback(
     async (finalGuessCount: number, didSolve: boolean) => {
       try {
         await fetch('/api/stats', {
@@ -151,9 +151,16 @@ export default function PlayPage() {
         // best-effort
       }
       setStatsRefreshKey((k) => k + 1);
-      setStatsOpen(true);
     },
     [date],
+  );
+
+  const recordAndShowStats = useCallback(
+    async (finalGuessCount: number, didSolve: boolean) => {
+      await recordPlay(finalGuessCount, didSolve);
+      setStatsOpen(true);
+    },
+    [recordPlay],
   );
 
   const submit = useCallback(async () => {
@@ -192,14 +199,17 @@ export default function PlayPage() {
         await new Promise((r) => setTimeout(r, 500));
         setFinished(true);
         setSolved(false);
-        recordAndShowStats(nextGuesses.length, false);
+        // Record the loss but don't auto-pop the stats sheet — the modal
+        // covers the reveal and the player just sees the word "flash".
+        // They can hit STATS in the header when they're ready.
+        recordPlay(nextGuesses.length, false);
       }
     } catch {
       shake(guesses.length, 'NETWORK ERROR');
     } finally {
       setSubmitting(false);
     }
-  }, [current, date, finished, guesses, recordAndShowStats, shake, submitting]);
+  }, [current, date, finished, guesses, recordAndShowStats, recordPlay, shake, submitting]);
 
   const onKey = useCallback(
     (key: string) => {
